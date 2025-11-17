@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Narrative Journey | Adaptive Leadership</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2C5F7C;
+            --secondary-color: #4A90A4;
+            --accent-color: #E8A87C;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --bg-light: #F7FAFC;
+            --card-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .app-wrapper {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            min-height: 90vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .intro-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .intro-text {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .intro-text p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .intro-text strong {
+            color: var(--primary-color);
+        }
+
+        .core-prompt {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            font-size: 1.1rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background: #D89A6D;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .theme-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .theme-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .theme-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .theme-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .question-card {
+            background: var(--bg-light);
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .question-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .question-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .question-list li {
+            padding: 12px 0;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .question-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .reflection-box {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            margin: 15px 0;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .reflection-box:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .progress-bar {
+            background: var(--bg-light);
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .journey-summary {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .journey-item {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .journey-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .journey-item p {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .facilitator-note {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #e17055;
+        }
+
+        .facilitator-note strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #d63031;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 5px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-buttons .btn {
+                width: 100%;
+            }
+        }
+
+        .saved-indicator {
+            background: #00b894;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: none;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .saved-indicator.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="app-wrapper">
+            <div class="header">
+                <h1>Your Narrative Journey</h1>
+                <p>Personal Narrative & Career Agency through Adaptive Leadership</p>
+            </div>
+
+            <div class="content">
+                <!-- Welcome Screen -->
+                <div id="welcome-screen" class="screen active">
+                    <div class="intro-section">
+                        <h2>Welcome to Your Leadership Journey</h2>
+
+                        <div class="intro-text">
+                            <p><strong>Adaptive Leadership begins with noticing</strong>, and one of the most powerful things you can notice is the story you're telling about your own work.</p>
+
+                            <p>You are the author of your narrative. The stories you choose to tell (internally and externally) shape how colleagues see you, how opportunities come your way, and the direction of your career.</p>
+
+                            <p><strong>Remember:</strong> You are in control of your own narrative. You decide how you develop, how you share your growth, and how you signal your readiness for what comes next.</p>
+                        </div>
+
+                        <div class="core-prompt">
+                            "What language, image, or principle from Adaptive Leadership has helped you see your own story differently—or tell it more clearly?"
+                        </div>
+
+                        <div class="facilitator-note">
+                            <strong>Remember:</strong> You can't always control your positional authority—but you can always control your narrative. And your narrative influences how people see your capacity, your readiness, and your trajectory.
+                        </div>
+
+                        <div class="text-center mt-20">
+                            <button class="btn" onclick="startJourney()">Begin Your Journey</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme Selection Screen -->
+                <div id="theme-selection-screen" class="screen">
+                    <h2 class="text-center mb-20">Explore Three Key Themes</h2>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="main-progress" style="width: 0%"></div>
+                    </div>
+
+                    <div class="theme-card" onclick="goToTheme(1)">
+                        <h3>Theme 1: Owning Your Narrative</h3>
+                        <p>Move from "What's happening around me?" to "What story am I choosing to tell about what's happening?"</p>
+                        <span class="badge" id="theme1-badge">Not Started</span>
+                    </div>
+
+                    <div class="theme-card" onclick="goToTheme(2)">
+                        <h3>Theme 2: Sharing Your Story with Colleagues</h3>
+                        <p>Move from passive observation to intentional communication—treating storytelling as a learnable skill.</p>
+                        <span class="badge" id="theme2-badge">Not Started</span>
+                    </div>
+
+                    <div class="theme-card" onclick="goToTheme(3)">
+                        <h3>Theme 3: Narrative as Career Pathway</h3>
+                        <p>See storytelling as strategy—not self-promotion—and central to career progression.</p>
+                        <span class="badge" id="theme3-badge">Not Started</span>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn btn-outline" onclick="goToScreen('welcome-screen')">Back</button>
+                        <button class="btn btn-secondary" onclick="goToScreen('journey-summary-screen')">View My Journey</button>
+                    </div>
+                </div>
+
+                <!-- Theme 1 Screen -->
+                <div id="theme1-screen" class="screen">
+                    <h2>Theme 1: Owning Your Narrative</h2>
+
+                    <div class="intro-text">
+                        <p><strong>Purpose:</strong> Move from "What's happening around me?" to "What story am I choosing to tell about what's happening?"</p>
+                    </div>
+
+                    <div class="question-card">
+                        <h4>Reflect on These Questions:</h4>
+                        <ul class="question-list">
+                            <li>How has Adaptive Leadership helped you frame your role in a new way?</li>
+                            <li>What story are you telling about who you are as a leader right now?</li>
+                            <li>What small experiments have shifted your sense of identity or direction?</li>
+                            <li>What's a part of your story you're ready to share more confidently?</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4>Your Reflections:</h4>
+                        <textarea class="reflection-box" id="theme1-reflection" placeholder="Write your thoughts here..."></textarea>
+                        <div class="saved-indicator" id="theme1-saved">Saved! ✓</div>
+                        <button class="btn" onclick="saveReflection(1)">Save Reflection</button>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn btn-outline" onclick="goToScreen('theme-selection-screen')">Back to Themes</button>
+                        <button class="btn" onclick="goToTheme(2)">Next Theme →</button>
+                    </div>
+                </div>
+
+                <!-- Theme 2 Screen -->
+                <div id="theme2-screen" class="screen">
+                    <h2>Theme 2: Sharing Your Story with Colleagues</h2>
+
+                    <div class="intro-text">
+                        <p><strong>Purpose:</strong> Move from passive observation to intentional communication—treating storytelling as a learnable skill.</p>
+                        <p><strong>Connect back:</strong> Repetition is a tool—it helps you teach others who you're becoming.</p>
+                    </div>
+
+                    <div class="question-card">
+                        <h4>Reflect on These Questions:</h4>
+                        <ul class="question-list">
+                            <li>How have you shared your developing insights with teammates—and what happened?</li>
+                            <li>Where do you want colleagues to understand your thinking more deeply?</li>
+                            <li>When someone pushes back, what story do you tell yourself to stay grounded?</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4>Your Reflections:</h4>
+                        <textarea class="reflection-box" id="theme2-reflection" placeholder="Write your thoughts here..."></textarea>
+                        <div class="saved-indicator" id="theme2-saved">Saved! ✓</div>
+                        <button class="btn" onclick="saveReflection(2)">Save Reflection</button>
+                    </div>
+
+                    <div class="facilitator-note">
+                        <strong>Bridge to Theme 3:</strong> Once you begin to own and share your story, something shifts: narrative becomes not just communication—it becomes strategy.
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn btn-outline" onclick="goToTheme(1)">← Previous Theme</button>
+                        <button class="btn" onclick="goToTheme(3)">Next Theme →</button>
+                    </div>
+                </div>
+
+                <!-- Theme 3 Screen -->
+                <div id="theme3-screen" class="screen">
+                    <h2>Theme 3: Narrative as Career Pathway</h2>
+
+                    <div class="intro-text">
+                        <p><strong>Purpose:</strong> Help you see storytelling as strategy—not self-promotion—and central to career progression.</p>
+                    </div>
+
+                    <div class="question-card">
+                        <h4>Reflect on These Questions:</h4>
+                        <ul class="question-list">
+                            <li>What part of your story do you think opens doors—or could, if told more clearly?</li>
+                            <li>What have you learned about yourself through experiments or challenges that signals where you want to go next?</li>
+                            <li>How has articulating your growth helped you feel more ownership over your career direction?</li>
+                            <li>If your supervisor asked, "What do you want to be known for?" what would you say?</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4>Your Reflections:</h4>
+                        <textarea class="reflection-box" id="theme3-reflection" placeholder="Write your thoughts here..."></textarea>
+                        <div class="saved-indicator" id="theme3-saved">Saved! ✓</div>
+                        <button class="btn" onclick="saveReflection(3)">Save Reflection</button>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn btn-outline" onclick="goToTheme(2)">← Previous Theme</button>
+                        <button class="btn btn-secondary" onclick="goToScreen('closing-screen')">Continue to Closing →</button>
+                    </div>
+                </div>
+
+                <!-- Closing Screen -->
+                <div id="closing-screen" class="screen">
+                    <h2>Closing Reflection</h2>
+
+                    <div class="core-prompt">
+                        "What is one small step you can take in the next two weeks to communicate your growth or aspirations more clearly—in a meeting, an email, a project update, or a one-on-one?"
+                    </div>
+
+                    <div>
+                        <h4>Your Commitment:</h4>
+                        <textarea class="reflection-box" id="closing-reflection" placeholder="Write your action step here..."></textarea>
+                        <div class="saved-indicator" id="closing-saved">Saved! ✓</div>
+                        <button class="btn" onclick="saveReflection('closing')">Save Action Step</button>
+                    </div>
+
+                    <div class="facilitator-note">
+                        <strong>Remember:</strong> Your narrative isn't spin—it's how you help others see your capacity and your readiness. And you get to shape it.
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn btn-outline" onclick="goToScreen('theme-selection-screen')">Back to Themes</button>
+                        <button class="btn btn-secondary" onclick="goToScreen('journey-summary-screen')">View Complete Journey →</button>
+                    </div>
+                </div>
+
+                <!-- Journey Summary Screen -->
+                <div id="journey-summary-screen" class="screen">
+                    <h2>Your Complete Journey</h2>
+
+                    <div class="intro-text">
+                        <p>Here's a summary of your reflections and insights from your narrative journey.</p>
+                    </div>
+
+                    <div class="journey-summary" id="journey-content">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn btn-outline" onclick="goToScreen('theme-selection-screen')">Back to Themes</button>
+                        <button class="btn btn-secondary" onclick="exportJourney()">Export Journey</button>
+                        <button class="btn" onclick="resetJourney()">Start New Journey</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Journey data storage
+        let journeyData = {
+            theme1: '',
+            theme2: '',
+            theme3: '',
+            closing: '',
+            completedThemes: []
+        };
+
+        // Load saved data on page load
+        window.addEventListener('load', function() {
+            loadJourneyData();
+            updateProgress();
+        });
+
+        // Navigation functions
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+
+            if (screenId === 'journey-summary-screen') {
+                displayJourneySummary();
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function startJourney() {
+            goToScreen('theme-selection-screen');
+        }
+
+        function goToTheme(themeNumber) {
+            goToScreen('theme' + themeNumber + '-screen');
+        }
+
+        // Save reflection
+        function saveReflection(theme) {
+            const reflectionText = document.getElementById('theme' + theme + '-reflection').value;
+            journeyData['theme' + theme] = reflectionText;
+
+            if (!journeyData.completedThemes.includes(theme)) {
+                journeyData.completedThemes.push(theme);
+            }
+
+            // Save to localStorage
+            localStorage.setItem('narrativeJourney', JSON.stringify(journeyData));
+
+            // Show saved indicator
+            const indicator = document.getElementById('theme' + theme + '-saved');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 3000);
+
+            // Update badges and progress
+            updateThemeBadge(theme, 'Completed');
+            updateProgress();
+        }
+
+        // Load journey data from localStorage
+        function loadJourneyData() {
+            const saved = localStorage.getItem('narrativeJourney');
+            if (saved) {
+                journeyData = JSON.parse(saved);
+
+                // Populate text areas
+                if (journeyData.theme1) {
+                    document.getElementById('theme1-reflection').value = journeyData.theme1;
+                }
+                if (journeyData.theme2) {
+                    document.getElementById('theme2-reflection').value = journeyData.theme2;
+                }
+                if (journeyData.theme3) {
+                    document.getElementById('theme3-reflection').value = journeyData.theme3;
+                }
+                if (journeyData.closing) {
+                    document.getElementById('closing-reflection').value = journeyData.closing;
+                }
+
+                // Update badges
+                journeyData.completedThemes.forEach(theme => {
+                    updateThemeBadge(theme, 'Completed');
+                });
+            }
+        }
+
+        // Update theme badge
+        function updateThemeBadge(theme, status) {
+            const badge = document.getElementById('theme' + theme + '-badge');
+            if (badge) {
+                badge.textContent = status;
+                badge.style.background = status === 'Completed' ? '#00b894' : '#fdcb6e';
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const totalThemes = 3;
+            const completed = journeyData.completedThemes.length;
+            const percentage = (completed / totalThemes) * 100;
+
+            document.getElementById('main-progress').style.width = percentage + '%';
+        }
+
+        // Display journey summary
+        function displayJourneySummary() {
+            const content = document.getElementById('journey-content');
+            let html = '';
+
+            if (journeyData.theme1) {
+                html += `
+                    <div class="journey-item">
+                        <h4>Theme 1: Owning Your Narrative</h4>
+                        <p>${journeyData.theme1}</p>
+                    </div>
+                `;
+            }
+
+            if (journeyData.theme2) {
+                html += `
+                    <div class="journey-item">
+                        <h4>Theme 2: Sharing Your Story with Colleagues</h4>
+                        <p>${journeyData.theme2}</p>
+                    </div>
+                `;
+            }
+
+            if (journeyData.theme3) {
+                html += `
+                    <div class="journey-item">
+                        <h4>Theme 3: Narrative as Career Pathway</h4>
+                        <p>${journeyData.theme3}</p>
+                    </div>
+                `;
+            }
+
+            if (journeyData.closing) {
+                html += `
+                    <div class="journey-item">
+                        <h4>Your Action Step</h4>
+                        <p>${journeyData.closing}</p>
+                    </div>
+                `;
+            }
+
+            if (html === '') {
+                html = '<p class="text-center">You haven\'t started any reflections yet. Begin your journey to see your progress here!</p>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        // Export journey
+        function exportJourney() {
+            let exportText = 'MY NARRATIVE JOURNEY\n';
+            exportText += '======================\n\n';
+            exportText += 'Personal Narrative & Career Agency through Adaptive Leadership\n\n';
+
+            if (journeyData.theme1) {
+                exportText += 'THEME 1: OWNING YOUR NARRATIVE\n';
+                exportText += '-'.repeat(50) + '\n';
+                exportText += journeyData.theme1 + '\n\n';
+            }
+
+            if (journeyData.theme2) {
+                exportText += 'THEME 2: SHARING YOUR STORY WITH COLLEAGUES\n';
+                exportText += '-'.repeat(50) + '\n';
+                exportText += journeyData.theme2 + '\n\n';
+            }
+
+            if (journeyData.theme3) {
+                exportText += 'THEME 3: NARRATIVE AS CAREER PATHWAY\n';
+                exportText += '-'.repeat(50) + '\n';
+                exportText += journeyData.theme3 + '\n\n';
+            }
+
+            if (journeyData.closing) {
+                exportText += 'MY ACTION STEP\n';
+                exportText += '-'.repeat(50) + '\n';
+                exportText += journeyData.closing + '\n\n';
+            }
+
+            exportText += '\n======================\n';
+            exportText += 'Remember: You can\'t always control your positional authority—but you can always control your narrative.\n';
+
+            // Create download
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'my-narrative-journey.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Reset journey
+        function resetJourney() {
+            if (confirm('Are you sure you want to start a new journey? This will clear all your current reflections.')) {
+                localStorage.removeItem('narrativeJourney');
+                journeyData = {
+                    theme1: '',
+                    theme2: '',
+                    theme3: '',
+                    closing: '',
+                    completedThemes: []
+                };
+
+                // Clear all text areas
+                document.querySelectorAll('.reflection-box').forEach(box => {
+                    box.value = '';
+                });
+
+                // Reset badges
+                for (let i = 1; i <= 3; i++) {
+                    updateThemeBadge(i, 'Not Started');
+                }
+
+                updateProgress();
+                goToScreen('welcome-screen');
+            }
+        }
+    </script>
+</body>
+</html>
